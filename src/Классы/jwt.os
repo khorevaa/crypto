@@ -1,15 +1,15 @@
 
 
-Перем пХеширование;
+Перем ФункцияХешширования;
 
 // Конструктор объекта JwtEncoder.
 //
 Процедура ПриСозданииОбъекта(Знач Хеширование = Неопределено)
 
 	Если Хеширование = Неопределено Тогда
-		пХеширование = ХешФункция.SHA256;
+		ФункцияХешширования = ХешФункция.SHA256;
 	Иначе	
-		пХеширование = Хеширование;
+		ФункцияХешширования = Хеширование;
 	КонецЕсли;
 
 КонецПроцедуры
@@ -74,7 +74,7 @@ Function Encode(Val SecretKey, Val Payload = Undefined, Val ExtraHeaders = Undef
 	signature = Шифрование.HMAC(
 		GetBinaryDataFromString(SecretKey),
 		GetBinaryDataFromString(stringToSign),
-		пХеширование);
+		ФункцияХешширования);
 
 	segments.Add(Base64UrlEncode(signature));
 
