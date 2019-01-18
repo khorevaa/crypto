@@ -38,8 +38,9 @@ Function Encode(Val SecretKey, Val Payload = Undefined, Val ExtraHeaders = Undef
 	EndIf;
 
 	header = New Structure;
-	header.Insert("typ", "JWT");
 	header.Insert("alg", "HS256");
+	header.Insert("typ", "JWT");
+	
 	If ExtraHeaders <> Undefined Then
 		For Each eh In ExtraHeaders Do
 			header.Insert(eh.Key, eh.Value);
