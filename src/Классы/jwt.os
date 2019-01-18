@@ -1,4 +1,19 @@
 
+
+Перем ФункцияХешширования;
+
+// Конструктор объекта JwtEncoder.
+//
+Процедура ПриСозданииОбъекта(Знач Хеширование = Неопределено)
+
+	Если Хеширование = Неопределено Тогда
+		ФункцияХешширования = ХешФункция.SHA256;
+	Иначе	
+		ФункцияХешширования = Хеширование;
+	КонецЕсли;
+
+КонецПроцедуры
+
 // <Описание функции>
 //
 // Параметры:
@@ -38,8 +53,9 @@ Function Encode(Val SecretKey, Val Payload = Undefined, Val ExtraHeaders = Undef
 	EndIf;
 
 	header = New Structure;
-	header.Insert("typ", "JWT");
 	header.Insert("alg", "HS256");
+	header.Insert("typ", "JWT");
+	
 	If ExtraHeaders <> Undefined Then
 		For Each eh In ExtraHeaders Do
 			header.Insert(eh.Key, eh.Value);
@@ -58,7 +74,7 @@ Function Encode(Val SecretKey, Val Payload = Undefined, Val ExtraHeaders = Undef
 	signature = Шифрование.HMAC(
 		GetBinaryDataFromString(SecretKey),
 		GetBinaryDataFromString(stringToSign),
-		HashFunction.SHA256);
+		ФункцияХешширования);
 
 	segments.Add(Base64UrlEncode(signature));
 
